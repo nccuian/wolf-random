@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+        text-align: center;
+        padding-top: 50px;
+      }
+      button {
+        width: 200px;
+        height: 80px;
+        background-color: cornflowerblue;
+        border-color: cornflowerblue;
+        color: #fff;
+        font-size: 2rem;
+        font-weight: bold;
+      }
+      button[disabled] {
+        opacity: 0.8;
+      }
+      p {
+        color: #313131;
+        font-size: 1.5rem;
+        font-weight: 600;
+      }
+      input {
+        display: block;
+        margin: 0 auto;
+        margin-bottom: 30px;
+        width: 100px;
+        height: 30px;
+        padding-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input type="number" placeholder="人數" />
+      <button>按我</button>
+      <p></p>
+    </div>
+
+    <script>
+      const input = document.querySelector("input");
+      const button = document.querySelector("button");
+      const p = document.querySelector("p");
+
+      let arr = [];
+
+      button.addEventListener("click", () => {
+        if (!input.getAttribute("disabled")) {
+          input.setAttribute("disabled", true);
+          arr = Array(Number(input.value))
+            .fill("x")
+            .map((x, i) => i);
+          const number = doRandom();
+          decideMan(number);
+        } else {
+          const number = doRandom();
+          decideMan(number);
+        }
+      });
+
+      function doRandom() {
+        const ran = Math.floor(Math.random() * arr.length);
+        const number = arr[ran];
+        arr = arr.filter((n, i) => n !== arr[ran]);
+        if (arr.length === 0) {
+          button.setAttribute("disabled", true);
+          button.innerText = "DONE";
+        }
+        return number;
+      }
+
+      function decideMan(number) {
+        if (Number(number) === 0) {
+          p.innerText = "你是狼人";
+        } else {
+          p.innerText = "你是平民";
+        }
+      }
+    </script>
+  </body>
+</html>
