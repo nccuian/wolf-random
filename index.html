@@ -47,10 +47,23 @@
       const input = document.querySelector("input");
       const button = document.querySelector("button");
       const p = document.querySelector("p");
+      let hasLook = false;
 
       let arr = [];
 
       button.addEventListener("click", () => {
+        if (hasLook) {
+          if (arr.length === 0) {
+            button.setAttribute("disabled", true);
+            button.innerText = "DONE";
+            p.innerText = "";
+            return;
+          }
+          button.innerText = "按我";
+          p.innerText = "";
+          hasLook = false;
+          return;
+        }
         if (!input.getAttribute("disabled")) {
           input.setAttribute("disabled", true);
           arr = Array(Number(input.value))
@@ -68,10 +81,6 @@
         const ran = Math.floor(Math.random() * arr.length);
         const number = arr[ran];
         arr = arr.filter((n, i) => n !== arr[ran]);
-        if (arr.length === 0) {
-          button.setAttribute("disabled", true);
-          button.innerText = "DONE";
-        }
         return number;
       }
 
@@ -81,6 +90,8 @@
         } else {
           p.innerText = "你是平民";
         }
+        hasLook = true;
+        button.innerText = "看完了";
       }
     </script>
   </body>
